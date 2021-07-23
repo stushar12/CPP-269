@@ -1,26 +1,54 @@
-int atoi(string str)
-{
-    int num = 0;
-    bool isNegative = false;
-    int i = 0;
-    
-    if(str[i] == '-')
+int myAtoi(string str) 
     {
-        isNegative = true;
+        
+    int n=str.size();
+
+    int i=0;
+
+    while(i<n and str[i]==' ')
+    {
         i++;
     }
-    
-    for(; i < str.size(); i++)
+
+    if(i==n)
+    return 0;
+
+    int sign=1;
+    long long int res=0;
+
+    if(str[i]=='-')
     {
-        if(isdigit(str[i]))
+        sign=0;
+        i++;
+    }
+    else if(str[i]=='+')
+    {
+        i++;
+    }
+    while(i<n)
+    {
+        if(str[i]>='0' and str[i]<='9')
         {
-            num = num * 10 + (str[i] - '0');
+            res=res*10;
+
+            if(res<INT_MIN or res>INT_MAX)
+            break;
+
+            res=res+str[i]-'0';
         }
         else
-        {
-            return -1;
-        }
+            break;
+
+        i++;
     }
-    
-    return (isNegative == true) ? -num : num;
-}
+    if(sign==0)
+    res=res*-1;
+
+   if(res<INT_MIN)
+   return INT_MIN;
+
+   if(res>INT_MAX)
+   return INT_MAX;
+
+return res;
+    }
